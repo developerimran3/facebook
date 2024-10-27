@@ -32,7 +32,7 @@ function reset_form()
  * File Uploading Function 
  */
 
-function fileUplaod(array $files, string $path = "media/")
+function move(array $files, $path = "media/")
 {
     // file manage 
     $tmp_name = $files['tmp_name'];

@@ -215,40 +215,6 @@ if (file_exists(__DIR__ . '/autoload.php')) {
 
     <div class="fb-home-timeline-area">
       <div class="fb-home-timeline">
-
-        <?php
-        /**
-         * create user post
-         */
-
-
-        if ($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['post_submit'] == "post") {
-
-
-          /**
-           * get valus
-           */
-
-
-          $user_name = $_POST['post_user_name'];
-          $user_name = $_POST['post_content'];
-        }
-
-        fileUplaod([
-          "tmp_name"  => $_FILES['post_user_photo']['tmp_name'],
-          "name"      => $_FILES['post_user_photo']['name']
-        ], "media/posts/");
-
-
-        // for ($i = 0; $i < count($_FILES['post_photos']['name']); $i++) {
-        //   fileUplaod([
-        //     "tmp_name"  => $_FILES['post_photos']['name']['tmp_name'][$i],
-        //     "name"      => $_FILES['post_photos']['name']['name'][$i]
-        //   ], "media/user_photo/");
-        // };
-
-        ?>
-
         <!-- Story Box  -->
         <div class="story-box">
           <div class="story-box-header">
@@ -362,6 +328,38 @@ if (file_exists(__DIR__ . '/autoload.php')) {
             </div>
           </div>
         </div>
+
+
+        <?php
+        /**
+         * create user post
+         */
+
+        if ($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['post_submit'] == "Post") {
+
+          /**
+           * get valus
+           */
+
+          $user_name = $_POST['post_user_name'];
+          $post_content = $_POST['post_content'];
+
+          move([
+            "tmp_name" => $_FILES['post_user_photo']['tmp_name'],
+            "name"      => $_FILES['post_user_photo']['name'],
+          ], "media/user_photo/");
+
+
+          //gellary Photo
+          for ($i = 0; $i < count($_FILES['post_photos']['name']); $i++) {
+            move([
+              "tmp_name"  => $_FILES['post_photos']['tmp_name'][$i],
+              "name"      => $_FILES['post_photos']['name'][$i],
+            ], "media/posts/");
+          }
+        }
+        ?>
+
 
         <!-- Create Post Box  -->
         <div class="create-post">
@@ -664,13 +662,9 @@ if (file_exists(__DIR__ . '/autoload.php')) {
           <div class="post-comments-area">
           </div>
         </div>
-
       </div>
     </div>
   </div>
-
-
-
 
 
 
@@ -681,14 +675,14 @@ if (file_exists(__DIR__ . '/autoload.php')) {
         <div class="modal-body">
           <h2>Create Post</h2>
           <hr>
-          <form action="method=" POST" enctype="multipart/form-data">
+          <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
             <div class="my-2">
               <label for="">Auth User Name</label>
               <input type="text" class="form-control" name="post_user_name" placeholder="Name">
             </div>
             <div class="my-2">
               <label for="">Auth User Photo</label>
-              <input type="file" class="form-control" name="post_user_photo" placeholder="photo">
+              <input type="file" class="form-control" name="post_user_photo" placeholder="user photo">
             </div>
 
             <div class="my-2">
@@ -698,12 +692,12 @@ if (file_exists(__DIR__ . '/autoload.php')) {
 
             <div class="my-2">
               <label for="">Post Photo</label>
-              <input type="file" class="form-control" multiple name="post_photos[]" placeholder="photo">
+              <input type="file" class="form-control" multiple name="post_photos[]" placeholder="post photo">
             </div>
 
             <div class="my-2">
               <label for="">Video Content</label>
-              <input type="file" class="form-control" name="post_video" placeholder="photo">
+              <input type="file" class="form-control" name="post_video" placeholder="Post Video Link">
             </div
 
               <div class="my-2">
@@ -747,7 +741,7 @@ if (file_exists(__DIR__ . '/autoload.php')) {
 
 
             <div class="my-2">
-              <input type="submit" class="btn btn-primary d-block w-100" value="Post">
+              <input type="submit" class="btn btn-primary d-block w-100" value="comment">
             </div>
           </form>
         </div>
