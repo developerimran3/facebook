@@ -215,6 +215,40 @@ if (file_exists(__DIR__ . '/autoload.php')) {
 
     <div class="fb-home-timeline-area">
       <div class="fb-home-timeline">
+
+        <?php
+        /**
+         * create user post
+         */
+
+
+        if ($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['post_submit'] == "post") {
+
+
+          /**
+           * get valus
+           */
+
+
+          $user_name = $_POST['post_user_name'];
+          $user_name = $_POST['post_content'];
+        }
+
+        fileUplaod([
+          "tmp_name"  => $_FILES['post_user_photo']['tmp_name'],
+          "name"      => $_FILES['post_user_photo']['name']
+        ], "media/posts/");
+
+
+        // for ($i = 0; $i < count($_FILES['post_photos']['name']); $i++) {
+        //   fileUplaod([
+        //     "tmp_name"  => $_FILES['post_photos']['name']['tmp_name'][$i],
+        //     "name"      => $_FILES['post_photos']['name']['name'][$i]
+        //   ], "media/user_photo/");
+        // };
+
+        ?>
+
         <!-- Story Box  -->
         <div class="story-box">
           <div class="story-box-header">
@@ -638,6 +672,8 @@ if (file_exists(__DIR__ . '/autoload.php')) {
 
 
 
+
+
   <!-- Create Post Modal start -->
   <div class="modal fade" id="create_post_modal">
     <div class="modal-dialog modal-dialog-centered">
@@ -680,12 +716,6 @@ if (file_exists(__DIR__ . '/autoload.php')) {
   </div>
   <!-- Create Post Modal end -->
 
-
-  <?php
-
-
-
-  ?>
 
   <!-- Create Comment Modal start -->
   <div class="modal fade" id="create_comment_modal">
