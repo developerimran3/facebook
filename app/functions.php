@@ -69,3 +69,31 @@ function createID($prefix = 'USER')
 
     return $uniqueID;
 }
+
+
+/**
+ * time ago function
+ */
+function timeAgo($timestamp)
+{
+    $timeDifference = time() - $timestamp;
+
+    // Define time periods in seconds
+    $periods = [
+        31536000 => 'year',
+        2592000  => 'month',
+        604800   => 'week',
+        86400    => 'day',
+        3600     => 'hour',
+        60       => 'min',
+        1        => 'sec'
+    ];
+
+    foreach ($periods as $seconds => $unit) {
+        if ($timeDifference >= $seconds) {
+            $count = floor($timeDifference / $seconds);
+            return "$count $unit" . ($count > 1 ? '' : '') . " ago";
+        }
+    }
+    return "just now";
+}

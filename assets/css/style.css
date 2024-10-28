@@ -1613,3 +1613,49 @@ span.camera-icon {
   font-size: 16px;
   font-family: inherit;
 }
+
+/*
+customs css for php
+*/
+
+.photos-4 {
+  gap: 8px;
+  height: auto !important;
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+}
+
+.photos-4 img {
+  height: 100%;
+}
+
+.photos-4 img:nth-child(1) {
+  grid-row: 1/-1;
+}
+
+.photos-3 {
+  gap: 8px;
+  height: auto !important;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.photos-3 img {
+  height: 100%;
+}
+
+.photos-3 img:nth-child(1) {
+  grid-row: 1/-1;
+}
+
+.photos-2 {
+  gap: 8px;
+  height: auto !important;
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+}
+
+.photos-2 img {
+  height: 100%;
+}
