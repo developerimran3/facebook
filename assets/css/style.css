@@ -757,6 +757,7 @@ Components
   font-family: SegoeUI;
   font-weight: 600;
   font-size: 14px;
+  text-transform: capitalize !important;
 }
 
 .user-post-header .post-info .user-details a:hover {
@@ -1658,4 +1659,8 @@ customs css for php
 
 .photos-2 img {
   height: 100%;
+}
+
+.post-media video {
+  width: 100%;
 }

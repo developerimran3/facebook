@@ -4,6 +4,28 @@ if (file_exists(__DIR__ . '/autoload.php')) {
   require_once __DIR__ . '/autoload.php';
 }
 
+
+$likeUpdate = [];
+if (isset($_GET['likeId'])) {
+
+  $likeId = $_GET['likeId'];
+
+  $likeData = json_decode(file_get_contents('./db/posts.json'), true);
+
+  foreach ($likeData as $likeItem) {
+
+    if ($likeItem["id"] == $likeId) {
+      $likeItem['likes'] = $likeItem['likes'] + 1;
+
+      array_push($likeUpdate, $likeItem);
+    }
+  }
+
+  file_put_contents('./db/posts.json', json_encode($likeUpdate));
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -391,7 +413,7 @@ if (file_exists(__DIR__ . '/autoload.php')) {
               "post_photo"       => $post_photo,
               "post_videos"      => $post_videos,
               "comments"         => [],
-              "likess"           => 0,
+              "likes"            => 0,
               "share"            => 0,
               "createdAt"        => time(),
               "updateAt"         => null,
@@ -602,6 +624,15 @@ if (file_exists(__DIR__ . '/autoload.php')) {
                   </div>
                 <?php endif; ?>
               <?php endif; ?>
+
+              <?php if ($post->post_videos): ?>
+                <div class="post-media">
+                  <video controls>
+                    <source src="media/videos/<?php echo $post->post_videos ?>">
+                  </video>
+                </div>
+              <?php endif; ?>
+
               <div class="post-comments">
                 <div class="comments-header">
                   <div class="reaction">
@@ -725,10 +756,10 @@ if (file_exists(__DIR__ . '/autoload.php')) {
                         </li>
                       </ul>
                     </div>
-                    <a href="#">Kajal Datta, Sufia Sepu and 550 others</a>
+                    <a href="#"><?php echo $post->likes; ?> Likes</a>
                   </div>
                   <div class="counts">
-                    <a href="#">95 Comments</a>
+                    <a href="#"><?php echo count($post->comments); ?> Comments</a>
                   </div>
                 </div>
                 <div class="divider-0"></div>
@@ -736,7 +767,7 @@ if (file_exists(__DIR__ . '/autoload.php')) {
                   <ul>
                     <li>
                       <span class="comment-icon"></span>
-                      <span>Like</span>
+                      <a href="?likeId=<?php echo $post->id; ?>">Like</a>
                     </li>
 
                     <li data-bs-toggle="modal" data-bs-target="#create_comment_modal">
